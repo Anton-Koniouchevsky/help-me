@@ -9,7 +9,6 @@ module.exports = function count(s, pairs) {
     if (mask.length == 1) {
         for (let i = 0; i < pairs.length; i++) {
             let allNumbers = Math.floor(baseNumber / pairs[i][0]);
-            //console.log(allNumbers)
             count += allNumbers;
             for (let j = 0; j < i; j++) {
                 count -= Math.floor(allNumbers / pairs[j][0]);
@@ -19,10 +18,9 @@ module.exports = function count(s, pairs) {
         if (mask[0] == 1) count = baseNumber - count;
         return getResult();
     }
-    //console.log(baseNumber);
     if (baseNumber > 100000000) {
 
-        return -1;
+        return 0;
     }
 
     for (let candidate = 1; candidate <= baseNumber; candidate++) {
@@ -42,8 +40,9 @@ module.exports = function count(s, pairs) {
                 pows *= 2;
             }
             powPart = Math.floor(pow / pows);
+            let mult = Math.pow(pairs[i][0], powPart);
             while (powPart < pow) {
-                count = (count * Math.pow(pairs[i][0], powPart)) % 1000000007;
+                count = (count * mult) % 1000000007;
                 pow -= powPart;
             }
             count = (count * Math.pow(pairs[i][0], pow)) % 1000000007;
